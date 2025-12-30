@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Play, Pause, RotateCcw, Download, Copy, Sheet, Flag, Timer } from 'lucide-react';
-import { RaceRecord, TimerState } from './types';
-import { generateId, formatTime, formatAbsoluteTime } from './utils';
-import { AtomicClock } from './components/AtomicClock';
-import { Stopwatch } from './components/Stopwatch';
-import { ResultsTable } from './components/ResultsTable';
+import { RaceRecord, TimerState } from './types.ts';
+import { generateId, formatTime, formatAbsoluteTime } from './utils.ts';
+import { AtomicClock } from './components/AtomicClock.tsx';
+import { Stopwatch } from './components/Stopwatch.tsx';
+import { ResultsTable } from './components/ResultsTable.tsx';
 
 const App: React.FC = () => {
   const [timerState, setTimerState] = useState<TimerState>(TimerState.IDLE);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [elapsed, setElapsed] = useState(0);
   const [records, setRecords] = useState<RaceRecord[]>([]);
-  const requestRef = useRef<number>();
+  const requestRef = useRef<number | null>(null);
   
   // Update the timer loop
   const animate = useCallback(() => {
@@ -188,7 +188,7 @@ const App: React.FC = () => {
           ) : (
             <>
               <button 
-                onClick={addRecord}
+                onClick={() => addRecord()}
                 className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 border-2 border-slate-600 text-white px-12 py-4 rounded-xl font-bold text-lg shadow-lg transition-all active:scale-95"
               >
                 <span className="font-mono bg-slate-900 px-2 py-0.5 rounded text-sm text-slate-400">ESPACE</span>
